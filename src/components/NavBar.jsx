@@ -1,3 +1,5 @@
+import { GlobeIcon, GearIcon } from "./Icons";
+
 const TABS = ["Home", "Destination Finder", "Wishlist", "Budget Tracker", "Settings"];
 
 export default function NavBar({ active, setActive }) {
