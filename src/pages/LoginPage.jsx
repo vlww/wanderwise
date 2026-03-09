@@ -14,6 +14,14 @@ export default function LoginPage({ onLogin }) {
               <h1>Wanderwise</h1>
             </div>
         
+        {/* error box */}
+                {error && (
+                <div className="error-box" key={error}>
+                    <AlertIcon />
+                    {error}
+                </div>
+                )}
+
         {/* email box */}
                 <div className="field-grp">
                   <label>Email</label>
