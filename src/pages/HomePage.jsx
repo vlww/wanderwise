@@ -51,6 +51,62 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings })
           </div>
         </div>
 
+
+        {/* wishlist */}
+        <div className="card">
+          <div className="card-header">
+            <ListIcon />
+            <h2>Wishlist</h2>
+          </div>
+          <div className="card-body" style={{ padding: "8px 14px" }}>
+            {wishlist.length === 0 ? (
+              <div className="empty-state">
+                <ImageIcon />
+                No destinations saved yet.<br />Use the Destination Finder to add some!
+              </div>
+            ) : (
+              <div className="wishlist-list">
+                {wishlist.map((w) => {
+                  const canAfford = w.cost <= savings;
+                  return (
+                    <div className="wish-item" key={w.id}>
+                      {w.img ? (
+                        <img
+                          className="wish-img"
+                          src={w.img}
+                          alt={w.name}
+                          onError={(e) => { e.target.style.display = "none"; }}
+                        />
+                      ) : (
+                        <div className="wish-img-placeholder"><ImageIcon /></div>
+                      )}
+                      <div className="wish-info">
+                        <div className="wish-name">
+                          {w.name}
+                          <span className={`wish-badge ${canAfford ? "badge-yes" : "badge-no"}`}>
+                            {canAfford ? "✓ Affordable" : "Not yet"}
+                          </span>
+                        </div>
+                        <div className="wish-country">{w.country}</div>
+                        <div className={`wish-cost${canAfford ? " affordable" : ""}`}>
+                          ${fmt(w.cost)}
+                        </div>
+                      </div>
+                      <button
+                        className="wish-heart"
+                        onClick={() => toggleFav(w.id)}
+                        title={w.fav ? "Unfavorite" : "Favorite"}
+                      >
+                        <HeartIcon filled={w.fav} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
           </div>
         </div>
       );
