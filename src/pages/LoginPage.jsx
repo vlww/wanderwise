@@ -56,7 +56,17 @@ export default function LoginPage({ onLogin }) {
                     </button>
                   </div>
                 </div>
+        
+        {/* forgot password */}
+        <div className="forgot-row">
+          <button className="link-btn">Forgot password?</button>
+        </div>
 
+        {/* submit button */}
+        <button className="btn-primary" onClick={handle} disabled={loading}>
+          {loading && <span className="spinner" />}
+          {loading ? "Logging in…" : "Log In"}
+        </button>
 
 
 
