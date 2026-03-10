@@ -4,6 +4,12 @@ import { DEMO_EMAIL, DEMO_PASSWORD } from "../data/initialData";
 import "../styles/login.css";
 
 export default function LoginPage({ onLogin }) {
+  const [email,    setEmail]    = useState("");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [error,    setError]    = useState("");
+  const [loading,  setLoading]  = useState(false);
+
     const handle = async () => {
         setError("");
         if (!email || !password) {
