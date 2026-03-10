@@ -1,3 +1,28 @@
+/* playfair display and dm sans */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* colors */
+:root {
+  --sand: #F5EFE6;
+  --cream: #FBF8F3;
+  --ocean: #2C5F8A;
+  --ocean-mid: #3A74A8;
+  --ocean-light: #4A8BB5;
+  --ocean-pale: #EBF3FA;
+  --coral: #E8714A;
+  --coral-light: #F08C6A;
+  --green: #2C8A5F;
+  --text-dark: #1A2332;
+  --text-mid: #4A5568;
+  --text-light: #8A9BB0;
+  --border: #D8CFC4;
+  --border-light: #EAE4DB;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --nav-h: 64px;
+}
+
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--cream);
