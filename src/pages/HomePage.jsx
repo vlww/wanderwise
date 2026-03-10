@@ -3,6 +3,25 @@ import { WalletIcon, ListIcon, HeartIcon, ImageIcon } from "../components/Icons"
 import "../styles/home.css";
 
 export default function HomePage({ wishlist, setWishlist, savings, setSavings }) {
+    const [rawSavings, setRawSavings] = useState(String(savings));
+
+    const goal = Math.max(...wishlist.map((w) => w.cost), 1);
+    const pct  = Math.min((savings / goal) * 100, 100);
+    const affordable    = wishlist.filter((w) => w.cost <= savings).length;
+    const notAffordable = wishlist.filter((w) => w.cost >  savings).length;
+
+    const handleSavings = (val) => {
+        setRawSavings(val);
+        const n = parseFloat(val.replace(/[^0-9.]/g, ""));
+        if (!isNaN(n)) setSavings(n);
+    };
+
+    const toggleFav = (id) =>
+        setWishlist((ws) => ws.map((w) => (w.id === id ? { ...w, fav: !w.fav } : w)));
+
+    const fmt = (n) =>
+    Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
     return (
         <div className="page">
         <div className="home-grid">
