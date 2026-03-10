@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GlobeIcon, MailIcon, LockIcon, EyeIcon, EyeOffIcon, AlertIcon } from "../components/Icons";
+import { DEMO_EMAIL, DEMO_PASSWORD } from "../data/initialData";
 import "../styles/login.css";
 
 export default function LoginPage({ onLogin }) {
@@ -16,7 +17,11 @@ export default function LoginPage({ onLogin }) {
         setLoading(true);
         await new Promise((r) => setTimeout(r, 1100));
         setLoading(false);
-
+        if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+          onLogin();
+        } else {
+          setError("Incorrect email or password.");
+        }
       };
     
     return (
