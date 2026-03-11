@@ -2,13 +2,7 @@ import { useState } from "react";
 import { WalletIcon, ListIcon, HeartIcon, ImageIcon } from "../components/Icons";
 import "../styles/home.css";
 
-export default function HomePage({ wishlist, setWishlist, savings, setSavings }) {
-    const [rawSavings, setRawSavings] = [String(savings), val => {
-    setSavings(val);
-  }];
-
-  const [rawVal, setRawVal] = [String(savings), null];
-
+export default function HomePage({ wishlist, setWishlist, savings, setSavings, goal }) {
   const pct = Math.min((savings / Math.max(goal, 1)) * 100, 100);
   const affordable = wishlist.filter(w => w.cost <= savings).length;
   const notAffordable = wishlist.filter(w => w.cost > savings).length;
@@ -21,20 +15,16 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings })
   const toggleFav = id => setWishlist(ws => ws.map(w => w.id === id ? { ...w, fav: !w.fav } : w));
   const fmt = n => Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-    return (
-        <div className="page">
-          <div className="greeting">
-            <h1 className="greeting-logo">Wanderwise</h1>
-          </div>
-          <div className="home-grid">
-
-
-        {/* budget summary */}
+  return (
+    <div className="page">
+      <div className="greeting">
+        <h1 className="greeting-logo">Wanderwise</h1>
+        <p>Here's an overview of your travel plans and budget.</p>
+      </div>
+      <div className="home-grid">
+        {/* Budget Summary */}
         <div className="card">
-          <div className="card-header">
-            <WalletIcon />
-            <h2>Budget Summary</h2>
-          </div>
+          <div className="card-header"><WalletIcon /><h2>Budget Summary</h2></div>
           <div className="card-body">
             <div className="savings-input-row">
               <span className="savings-input-label">My Savings</span>
@@ -42,10 +32,9 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings })
                 className="savings-input"
                 defaultValue={savings}
                 onChange={e => handleSavings(e.target.value)}
-                placeholder="1200"
+                placeholder="e.g. 1200"
               />
             </div>
-
             <div className="budget-total">Total Savings: <span>${fmt(savings)}</span></div>
             <div className="progress-track">
               <div className="progress-fill" style={{ width: `${pct}%` }} />
@@ -65,13 +54,9 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings })
           </div>
         </div>
 
-
-        {/* wishlist */}
+        {/* Wishlist Preview */}
         <div className="card">
-          <div className="card-header">
-            <ListIcon />
-            <h2>Wishlist</h2>
-          </div>
+          <div className="card-header"><ListIcon /><h2>Wishlist</h2></div>
           <div className="card-body" style={{ padding: "8px 14px" }}>
             {wishlist.length === 0 ? (
               <div className="empty-state">
@@ -108,8 +93,7 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings })
             )}
           </div>
         </div>
-
-          </div>
-        </div>
-      );
+      </div>
+    </div>
+  );
 }

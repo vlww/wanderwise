@@ -4,10 +4,9 @@ import { ImageIcon, HeartIcon } from '../components/Icons';
 import { ALL_DESTINATIONS, BUDGET_OPTIONS, DURATION_OPTIONS, INTEREST_OPTIONS, PER_PAGE } from '../data/initialData';
 
 const LABEL_OPTIONS = ["Favorite", "Maybe", "Too Expensive"];
-
 const LABEL_COLORS = {
-  Favorite:     { bg:"rgba(232,113,74,.12)", border:"#E8714A", text:"#C05030" },
-  Maybe:        { bg:"rgba(180,150,40,.12)", border:"#B8960A", text:"#8A7000" },
+  "Favorite":     { bg:"rgba(232,113,74,.12)", border:"#E8714A", text:"#C05030" },
+  "Maybe":        { bg:"rgba(180,150,40,.12)", border:"#B8960A", text:"#8A7000" },
   "Too Expensive": { bg:"rgba(44,95,138,.10)", border:"#4A8BB5", text:"#2C5F8A" },
 };
 
@@ -22,11 +21,9 @@ function Dropdown({ label, value, onChange, options }) {
   }, []);
   return (
     <div className="df-dropdown" ref={ref}>
-      <button className={`df-dropdown-btn${open ? " open" : ""}${value && value !== label ? " has-value" : ""}`} onClick={() => setOpen(o => !o)}>
+      <button className={`df-dropdown-btn${open ? " open" : ""}`} onClick={() => setOpen(o => !o)}>
         <span>{value || label}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       {open && (
         <div className="df-dropdown-menu">
@@ -54,9 +51,7 @@ function InterestDropdown({ selected, onChange }) {
     <div className="df-dropdown" ref={ref}>
       <button className={`df-dropdown-btn${open ? " open" : ""}${selected.length > 0 ? " has-value" : ""}`} onClick={() => setOpen(o => !o)}>
         <span>{label}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       {open && (
         <div className="df-dropdown-menu interest-menu">
@@ -111,9 +106,8 @@ function LabelDropdown({ value, onChange, onOpenChange }) {
     </div>
   );
 }
-
 /* main page */
-export default function WishlistPage({ wishlist, setWishlist }) {
+export default function WishlistPage({ wishlist, setWishlist, meta, setMeta }) {
   const [editingNote, setEditingNote] = useState(null);
   const [draftNote, setDraftNote] = useState("");
   const [budget, setBudget] = useState("Any Budget");
@@ -160,9 +154,7 @@ export default function WishlistPage({ wishlist, setWishlist }) {
       <div className="greeting">
         <h1 className="greeting-logo">Wishlist</h1>
       </div>
-
       <div className="wl-wrap">
-        {/* filter bar */}
         <div className="wl-filter-bar">
           <div className="wl-filter-left">
             <Dropdown label="Budget" value={budget} onChange={setBudget} options={BUDGET_OPTIONS} />
@@ -183,7 +175,7 @@ export default function WishlistPage({ wishlist, setWishlist }) {
             Showing <strong>{filtered.length}</strong> of <strong>{wishlist.length}</strong> destinations — filters active
           </div>
         )}
-      { /* table */}
+
         {wishlist.length === 0 ? (
           <div className="df-empty-state">
             <div className="df-empty-icon">
@@ -246,7 +238,6 @@ export default function WishlistPage({ wishlist, setWishlist }) {
               )}
             </div>
             {totalPages > 1 && (
-              /* pagination */
               <div className="df-pagination">
                 <button className="df-page-btn df-page-nav" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1}>← Previous</button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (

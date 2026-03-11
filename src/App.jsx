@@ -8,7 +8,7 @@ import LoginPage          from "./pages/LoginPage";
 import HomePage           from "./pages/HomePage";
 import DestinationFinder  from "./pages/DestinationFinder";
 import WishlistPage       from "./pages/WishlistPage";
-import BudgetTracker      from "./pages/BudgetTracker";
+import BudgetTrackerPage  from "./pages/BudgetTrackerPage";
 import SettingsPage       from "./pages/SettingsPage";
 
 /* access wishlist dataset */
@@ -34,7 +34,7 @@ export default function App() {
     switch (tab) {
       case "Home":               return <HomePage wishlist={wishlist} setWishlist={setWishlist} savings={savings} setSavings={setSavings} goal={goal} />;
       case "Destination Finder": return <DestinationFinder wishlist={wishlist} setWishlist={setWishlist} />;
-      case "Wishlist":           return <WishlistPage wishlist={wishlist} setWishlist={setWishlist} meta={meta} setMeta={setMeta} />;
+      case "Wishlist": return <WishlistPage wishlist={wishlist} setWishlist={setWishlist} meta={meta} setMeta={setMeta} />;      
       case "Budget Tracker":     return <BudgetTrackerPage wishlist={wishlist} savings={savings} setSavings={setSavings} goal={goal} setGoal={setGoal} />;
       case "Settings":           return <SettingsPage onLogout={handleLogout} colorTheme={colorTheme} setColorTheme={setColorTheme} emailNotifications={emailNotifications} setEmailNotifications={setEmailNotifications} />;
       default: return null;

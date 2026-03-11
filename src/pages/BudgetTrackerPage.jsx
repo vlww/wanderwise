@@ -30,7 +30,6 @@ export default function BudgetTrackerPage({ wishlist, savings, setSavings, goal,
       <div className="bt-wrap">
         <div className="bt-greeting">
           <h1 className="greeting-logo">Budget Tracker</h1>
-          <p>Track your savings and see exactly how close you are to each destination.</p>
         </div>
 
         <div className="bt-inputs-row">
@@ -49,8 +48,6 @@ export default function BudgetTrackerPage({ wishlist, savings, setSavings, goal,
               <input className="bt-input" value={goalRaw} onChange={e => handleGoal(e.target.value)} placeholder="0.00" />
             </div>
             <div className="bt-input-underline" />
-            <div className="bt-goal-bar"><div className="bt-goal-fill" style={{ width: `${goalPct}%` }} /></div>
-            <div className="bt-goal-pct"><strong>{Math.round(goalPct)}%</strong> of goal saved</div>
           </div>
         </div>
 
