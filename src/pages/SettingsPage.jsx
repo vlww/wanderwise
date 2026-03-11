@@ -74,6 +74,49 @@ export default function SettingsPage({ onLogout, colorTheme, setColorTheme, emai
           </div>
         </div>
 
+        {/* preferences and notifs */}
+        <div className="st-two-col">
+          <div className="st-section" style={{ margin: 0 }}>
+            <div className="st-section-header"><h3>App Preferences</h3></div>
+            <div className="st-section-body">
+              <div className="st-row">
+                <span className="st-label">Color Theme</span>
+                <select className="st-select" value={colorTheme} onChange={e => setColorTheme(e.target.value)}>
+                  <option>Blue</option>
+                  <option>Teal</option>
+                  <option>Coral</option>
+                  <option>Forest</option>
+                </select>
+              </div>
+              <div style={{ fontSize: ".78rem", color: "var(--text-light)", marginTop: -4 }}>Theme applies instantly across the app.</div>
+            </div>
+          </div>
+
+          <div className="st-section" style={{ margin: 0 }}>
+            <div className="st-section-header"><h3>Notification Settings</h3></div>
+            <div className="st-section-body">
+              <div className="st-checkbox-row" onClick={() => setDraftNotif(v => !v)}>
+                <div className={`st-checkbox${draftNotif ? " checked" : ""}`}>
+                  {draftNotif && <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>}
+                </div>
+                <div>
+                  <div className="st-checkbox-label">Receive Email Notifications</div>
+                  <div className="st-checkbox-sub">Get updates about new destinations and travel deals.</div>
+                </div>
+              </div>
+              <div className="st-save-row" style={{ paddingTop: 4 }}>
+                {prefSaved && (
+                  <span className="st-saved-msg">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Saved!
+                  </span>
+                )}
+                <button className="st-save-btn" onClick={savePreferences}>Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
       </div>
     </div>
   );
