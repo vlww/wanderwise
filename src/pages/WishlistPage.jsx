@@ -172,7 +172,7 @@ export default function WishlistPage({ wishlist, setWishlist, meta, setMeta }) {
 
         {activeFilters && (
           <div className="wl-filter-notice">
-            Showing <strong>{filtered.length}</strong> of <strong>{wishlist.length}</strong> destinations — filters active
+            Showing <strong>{filtered.length}</strong> of <strong>{wishlist.length}</strong> destinations
           </div>
         )}
 
