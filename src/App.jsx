@@ -12,7 +12,7 @@ import BudgetTracker      from "./pages/BudgetTracker";
 import SettingsPage       from "./pages/SettingsPage";
 
 /* access wishlist dataset */
-import { INITIAL_WISHLIST, INITIAL_SAVINGS } from "./data/Data";
+import { THEMES, INITIAL_WISHLIST } from "./data/initialData";
 import "./styles/global.css";
 
 export default function App() {
