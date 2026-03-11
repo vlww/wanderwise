@@ -200,7 +200,6 @@ export default function WishlistPage({ wishlist, setWishlist }) {
   const fmt = n => Number(n).toLocaleString("en-US", { minimumFractionDigits:2, maximumFractionDigits:2 });
 
   return (
-
     <div className="page">
       <div className="greeting">
         <h1 className="greeting-logo">Wishlist</h1>
@@ -208,7 +207,6 @@ export default function WishlistPage({ wishlist, setWishlist }) {
       </div>
 
       <div className="wl-wrap">
-
         {/* filter bar */}
         <div className="wl-filter-bar">
           <div className="wl-filter-left">
