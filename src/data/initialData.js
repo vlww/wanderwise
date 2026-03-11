@@ -37,8 +37,6 @@ export const ALL_DESTINATIONS = [
   { id:120, name:"New Orleans",country:"United States", cost:700,  duration:"weekend",   interests:["Food","Music","Culture","History","Nightlife"], img:"https://images.unsplash.com/photo-1568695215826-06edf03dd716?w=320&h=240&fit=crop" },
 ];
 
-export const INITIAL_SAVINGS = 1200;
-
 export const BUDGET_OPTIONS = [
   { label:"Any Budget",      min:0,    max:Infinity },
   { label:"Under $500",      min:0,    max:500 },
