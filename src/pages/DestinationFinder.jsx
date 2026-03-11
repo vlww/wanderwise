@@ -1,10 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { SearchIcon, HeartIcon, ImageIcon, TagIcon } from "../components/Icons";
-import {
-  ALL_DESTINATIONS, BUDGET_OPTIONS, DURATION_OPTIONS,
-  INTEREST_OPTIONS, PER_PAGE,
-} from "../data/initialData";
 import "../styles/destination-finder.css";
+import { SearchIcon, ImageIcon, HeartIcon } from '../components/Icons';
+import { ALL_DESTINATIONS, BUDGET_OPTIONS, DURATION_OPTIONS, INTEREST_OPTIONS, PER_PAGE } from '../data/initialData';
 
 /* dropdown */
 function Dropdown({ label, value, onChange, options }) {
@@ -21,23 +18,14 @@ function Dropdown({ label, value, onChange, options }) {
     <div className="df-dropdown" ref={ref}>
       <button className={`df-dropdown-btn${open ? " open" : ""}`} onClick={() => setOpen(o => !o)}>
         <span>{value || label}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       {open && (
         <div className="df-dropdown-menu">
-          {options.map((opt) => {
-            const optLabel = typeof opt === "string" ? opt : opt.label;
-            const isActive = value === optLabel;
+          {options.map(opt => {
+            const lbl = typeof opt === "string" ? opt : opt.label;
             return (
-              <button
-                key={optLabel}
-                className={`df-dropdown-item${isActive ? " active" : ""}`}
-                onClick={() => { onChange(optLabel); setOpen(false); }}
-              >
-                {optLabel}
-              </button>
+              <button key={lbl} className={`df-dropdown-item${value === lbl ? " active" : ""}`} onClick={() => { onChange(lbl); setOpen(false); }}>{lbl}</button>
             );
           })}
         </div>
@@ -57,49 +45,40 @@ function InterestDropdown({ selected, onChange }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const toggle = (interest) => {
-    onChange(
-      selected.includes(interest)
-        ? selected.filter(i => i !== interest)
-        : [...selected, interest]
-    );
-  };
+  const toggle = i => onChange(selected.includes(i) ? selected.filter(x => x !== i) : [...selected, i]);
+    const label = selected.length === 0 ? "Interests" : selected.length === 1 ? selected[0] : `${selected.length} selected`;
+    return (
+      <div className="df-dropdown" ref={ref}>
+        <button className={`df-dropdown-btn${open ? " open" : ""}${selected.length > 0 ? " has-value" : ""}`} onClick={() => setOpen(o => !o)}>
+          <span>{label}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        {open && (
+          <div className="df-dropdown-menu interest-menu">
+            {INTEREST_OPTIONS.map(i => (
+              <button key={i} className={`df-dropdown-item${selected.includes(i) ? " active" : ""}`} onClick={() => toggle(i)}>
+                {selected.includes(i) && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: 14, height: 14, marginRight: 6, flexShrink: 0 }}><polyline points="20 6 9 17 4 12"/></svg>}
+                {i}
+              </button>
+            ))}
+            {selected.length > 0 && <button className="df-dropdown-clear" onClick={() => onChange([])}>Clear all</button>}
+          </div>
+        )}
+    </div>
+  );
+}
 
-  const label = selected.length === 0
-    ? "Interests"
-    : selected.length === 1
-      ? selected[0]
-      : `${selected.length} selected`;
-
+function TagPopover({ tags, onClose }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
   return (
-    <div className="df-dropdown" ref={ref}>
-      <button className={`df-dropdown-btn${open ? " open" : ""}${selected.length > 0 ? " has-value" : ""}`} onClick={() => setOpen(o => !o)}>
-        <span>{label}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-      {open && (
-        <div className="df-dropdown-menu interest-menu">
-          {INTEREST_OPTIONS.map((interest) => (
-            <button
-              key={interest}
-              className={`df-dropdown-item${selected.includes(interest) ? " active" : ""}`}
-              onClick={() => toggle(interest)}
-            >
-              {selected.includes(interest) && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{width:14,height:14,marginRight:6,flexShrink:0}}>
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              )}
-              {interest}
-            </button>
-          ))}
-          {selected.length > 0 && (
-            <button className="df-dropdown-clear" onClick={() => onChange([])}>Clear all</button>
-          )}
-        </div>
-      )}
+    <div className="df-tag-popover" ref={ref}>
+      <div className="df-tag-popover-title">All tags</div>
+      {tags.map(tag => <span key={tag} className="df-tag">{tag}</span>)}
     </div>
   );
 }
