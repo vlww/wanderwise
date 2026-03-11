@@ -129,3 +129,21 @@ function LabelDropdown({ value, onChange }) {
     </div>
   );
 }
+
+/* main page */
+export default function WishlistPage({ wishlist, setWishlist }) {
+  
+
+  return (
+    <div className="page">
+      <div className="greeting">
+        <h1 className="greeting-logo">Wishlist</h1>
+        <p>Organise and plan your saved destinations.</p>
+      </div>
+
+      <div className="wl-wrap">
+
+      </div>
+    </div>
+  );
+}
