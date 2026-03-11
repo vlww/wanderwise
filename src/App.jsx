@@ -42,18 +42,13 @@ export default function App() {
   };
 
   return (
-    <>
-      <div className="app-bg" />
-      <div className="app-dots" />
-
-      {!loggedIn ? (
-        <LoginPage onLogin={() => setLoggedIn(true)} />
-      ) : (
-        <>
-          <NavBar active={tab} setActive={setTab} />
-          {renderPage()}
-        </>
-      )}
-    </>
-  );
+      <div style={themeVars}>
+        <div className="app-bg" />
+        <div className="app-dots" />
+        {!loggedIn
+          ? <LoginPage onLogin={() => setLoggedIn(true)} />
+          : <><NavBar active={tab} setActive={setTab} />{renderPage()}</>
+        }
+      </div>
+    );
 }
