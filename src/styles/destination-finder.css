@@ -2,7 +2,7 @@
   max-width: 900px; margin: 0 auto; padding: 0 24px;
 }
 
-/* filterbar */
+/* filter bar */
 .df-filters {
   display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap;
   margin-bottom: 12px;
