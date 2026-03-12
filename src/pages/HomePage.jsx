@@ -3,9 +3,23 @@ import { WalletIcon, ListIcon, HeartIcon, ImageIcon } from "../components/Icons"
 import "../styles/home.css";
 
 export default function HomePage({ wishlist, setWishlist, savings, setSavings, goal }) {
-  const pct = Math.min((savings / Math.max(goal, 1)) * 100, 100);
-  const affordable = wishlist.filter(w => w.cost <= savings).length;
-  const notAffordable = wishlist.filter(w => w.cost > savings).length;
+  let pct = (savings / goal) * 100;
+  if (pct > 100) {
+    pct = 100;
+  }
+  if (goal === 0) {
+    pct = 0;
+  }
+
+  let affordable = 0;
+  let notAffordable = 0;
+  for (let i = 0; i < wishlist.length; i++) {
+    if (wishlist[i].cost <= savings) {
+      affordable = affordable + 1;
+    } else {
+      notAffordable = notAffordable + 1;
+    }
+  }
 
   const handleSavings = val => {
     const n = parseFloat(val.replace(/[^0-9.]/g, ""));

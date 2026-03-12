@@ -16,11 +16,17 @@ export default function SettingsPage({ onLogout, colorTheme, setColorTheme, emai
 
   const saveAccount = () => {
     setPwError("");
-    if (password && password.length < 6) { setPwError("Password must be at least 6 characters."); return; }
-    if (password && password !== confirmPassword) { setPwError("Passwords do not match."); return; }
+    if (password.length > 0 && password.length < 6) {
+      setPwError("Password must be at least 6 characters.");
+      return;
+    }
+    if (password.length > 0 && password !== confirmPassword) {
+      setPwError("Passwords do not match.");
+      return;
+    }
     setAcctSaved(true);
-    setTimeout(() => setAcctSaved(false), 2500);
-    setPassword(""); setConfirmPassword("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   const savePreferences = () => {

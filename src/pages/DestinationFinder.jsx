@@ -96,16 +96,45 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
   const wishlistIds = new Set(wishlist.map(w => w.name + "|" + w.country));
 
   const runSearch = () => {
-    const bOpt = BUDGET_OPTIONS.find(b => b.label === budget) || BUDGET_OPTIONS[0];
-    const dVal = DURATION_OPTIONS.find(d => d.label === duration)?.value || "any";
-    const filtered = ALL_DESTINATIONS.filter(dest => {
-      const mQ = query.trim() === "" || dest.name.toLowerCase().includes(query.toLowerCase()) || dest.country.toLowerCase().includes(query.toLowerCase());
-      const mB = dest.cost >= bOpt.min && dest.cost <= bOpt.max;
-      const mD = dVal === "any" || dest.duration === dVal;
-      const mI = interests.length === 0 || interests.some(i => dest.interests.includes(i));
-      return mQ && mB && mD && mI;
-    });
-
+    let filtered = [];
+    for (let i = 0; i < ALL_DESTINATIONS.length; i++) {
+      let dest = ALL_DESTINATIONS[i];
+      let matchesQuery = true;
+      let matchesBudget = true;
+      let matchesDuration = true;
+      let matchesInterests = true;
+      if (query.trim() !== "") {
+        if ( dest.name.toLowerCase().includes(query.toLowerCase()) == false && dest.country.toLowerCase().includes(query.toLowerCase()) == false) {
+          matchesQuery = false;
+        }
+      }
+      if (budget !== "Any Budget") {
+        let bOpt = BUDGET_OPTIONS.find(b => b.label == budget);
+        if (dest.cost < bOpt.min || dest.cost > bOpt.max) {
+          matchesBudget = false;
+        }
+      }
+      if (duration !== "Any Duration") {
+        let dOpt = DURATION_OPTIONS.find(d => d.label == duration);
+        if (dest.duration !== dOpt.value) {
+          matchesDuration = false;
+        }
+      }
+      if (interests.length > 0) {
+        let found = false;
+        for (let j = 0; j < interests.length; j++) {
+          if (dest.interests.includes(interests[j])) {
+            found = true;
+          }
+        }
+        if (found == false) {
+          matchesInterests = false;
+        }
+      }
+      if (matchesQuery && matchesBudget && matchesDuration && matchesInterests) {
+        filtered.push(dest);
+      }
+    }
     setResults(filtered);
     setPage(1);
   };
