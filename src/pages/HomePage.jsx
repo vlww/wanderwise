@@ -97,7 +97,7 @@ export default function HomePage({ wishlist, setWishlist, savings, setSavings, g
                         <div className={`wish-cost${canAfford ? " affordable" : ""}`}>${fmt(w.cost)}</div>
                       </div>
                       <button className="wish-heart" onClick={() => toggleFav(w.id)} title={w.fav ? "Unfavorite" : "Favorite"}>
-                        <HeartIcon filled={w.fav} />
+                        <HeartIcon filled={true} />
                       </button>
                     </div>
                   );
