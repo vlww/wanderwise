@@ -23,9 +23,9 @@ function Dropdown({ label, value, onChange, options }) {
       {open && (
         <div className="df-dropdown-menu">
           {options.map(opt => {
-            const lbl = typeof opt === "string" ? opt : opt.label;
+            const lbl = typeof opt == "string" ? opt : opt.label;
             return (
-              <button key={lbl} className={`df-dropdown-item${value === lbl ? " active" : ""}`} onClick={() => { onChange(lbl); setOpen(false); }}>{lbl}</button>
+              <button key={lbl} className={`df-dropdown-item${value == lbl ? " active" : ""}`} onClick={() => { onChange(lbl); setOpen(false); }}>{lbl}</button>
             );
           })}
         </div>
@@ -46,7 +46,7 @@ function InterestDropdown({ selected, onChange }) {
   }, []);
 
   const toggle = i => onChange(selected.includes(i) ? selected.filter(x => x !== i) : [...selected, i]);
-    const label = selected.length === 0 ? "Interests" : selected.length === 1 ? selected[0] : `${selected.length} selected`;
+    const label = selected.length == 0 ? "Interests" : selected.length == 1 ? selected[0] : `${selected.length} selected`;
     return (
       <div className="df-dropdown" ref={ref}>
         <button className={`df-dropdown-btn${open ? " open" : ""}${selected.length > 0 ? " has-value" : ""}`} onClick={() => setOpen(o => !o)}>
@@ -141,8 +141,13 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
 
   const toggleWishlist = (dest) => {
     const key = dest.name + "|" + dest.country;
-    if (wishlistIds.has(key)) setWishlist(ws => ws.filter(w => !(w.name === dest.name && w.country === dest.country)));
-    else setWishlist(ws => [...ws, { id: dest.id, name: dest.name, country: dest.country, cost: dest.cost, fav: true, img: dest.img }]);
+    if (wishlistIds.has(key)) {
+      let newWishlist = wishlist.filter(w => w.name !== dest.name);
+      setWishlist(newWishlist);
+    } else {
+      let newItem = { id: dest.id, name: dest.name, country: dest.country, cost: dest.cost, img: dest.img };
+      setWishlist([...wishlist, newItem]);
+    }
   };
 
   const totalPages = results ? Math.ceil(results.length / PER_PAGE) : 0;
@@ -159,7 +164,7 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
               <div className="df-filters">
                 <div className="df-search-wrap">
                   <SearchIcon />
-                  <input className="df-search" placeholder="Search destinations" value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => e.key === "Enter" && runSearch()} />
+                  <input className="df-search" placeholder="Search destinations" value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => e.key == "Enter" && runSearch()} />
                 </div>
                 <Dropdown label="Budget" value={budget} onChange={setBudget} options={BUDGET_OPTIONS} />
                 <Dropdown label="Duration" value={duration} onChange={setDuration} options={DURATION_OPTIONS} />
@@ -167,12 +172,12 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
               </div>
               <button className="df-search-btn" onClick={runSearch}><SearchIcon />Search for destinations!</button>
       
-              {results === null ? (
+              {results == null ? (
                 <div className="df-empty-state">
                   <div className="df-empty-icon"><SearchIcon /></div>
                   <p>Set your filters and hit <strong>Search for destinations!</strong> to get started.</p>
                 </div>
-              ) : results.length === 0 ? (
+              ) : results.length == 0 ? (
                 <div className="df-empty-state">
                   <div className="df-empty-icon"><SearchIcon /></div>
                   <p>No destinations match your filters. Try adjusting your search.</p>
@@ -199,10 +204,10 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
                               {dest.interests.slice(0, 2).map(tag => <span key={tag} className="df-tag">{tag}</span>)}
                               {dest.interests.length > 2 && (
                                 <div className="df-tag-popover-wrap">
-                                  <span className="df-tag df-tag-more" onClick={e => { e.stopPropagation(); setOpenTagsId(openTagsId === dest.id ? null : dest.id); }}>
+                                  <span className="df-tag df-tag-more" onClick={e => { e.stopPropagation(); setOpenTagsId(openTagsId == dest.id ? null : dest.id); }}>
                                     +{dest.interests.length - 2}
                                   </span>
-                                  {openTagsId === dest.id && <TagPopover tags={dest.interests} onClose={() => setOpenTagsId(null)} />}
+                                  {openTagsId == dest.id && <TagPopover tags={dest.interests} onClose={() => setOpenTagsId(null)} />}
                                 </div>
                               )}
                             </div>
@@ -217,11 +222,29 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
                   {/* pagination controls */}
                   {totalPages > 1 && (
                     <div className="df-pagination">
-                      <button className="df-page-btn df-page-nav" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>← Previous</button>
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                        <button key={p} className={`df-page-btn${page === p ? " active" : ""}`} onClick={() => setPage(p)}>{p}</button>
-                      ))}
-                      <button className="df-page-btn df-page-nav" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>Next →</button>
+                      <button
+                        className="df-page-btn df-page-nav"
+                        onClick={() => {
+                          if (page > 1) setPage(page - 1);
+                        }}
+                        disabled={page == 1}
+                      >← Previous</button>
+
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => {
+                        let btnClass = "df-page-btn";
+                        if (page == p) btnClass = "df-page-btn active";
+                        return (
+                          <button key={p} className={btnClass} onClick={() => setPage(p)}>{p}</button>
+                        );
+                      })}
+
+                      <button
+                        className="df-page-btn df-page-nav"
+                        onClick={() => {
+                          if (page < totalPages) setPage(page + 1);
+                        }}
+                        disabled={page == totalPages}
+                      >Next →</button>
                     </div>
                   )}
                 </>

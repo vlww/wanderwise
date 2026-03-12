@@ -216,12 +216,24 @@ export default function WishlistPage({ wishlist, setWishlist, meta, setMeta }) {
                       </div>
                       <div className="wl-col-notes">
                         {isEditing ? (
-                          <textarea className="wl-note-input" value={draftNote} onChange={e => setDraftNote(e.target.value)}
-                            onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); saveNote(dest.id); } }}
-                            onBlur={() => saveNote(dest.id)} autoFocus placeholder="Add a note… (Enter to save)" />
+                          <textarea
+                            className="wl-note-input"
+                            value={draftNote}
+                            onChange={e => setDraftNote(e.target.value)}
+                            onKeyDown={e => {
+                              if (e.key == "Enter") {
+                                saveNote(dest.id);
+                              }
+                            }}
+                            onBlur={() => saveNote(dest.id)}
+                            autoFocus
+                            placeholder="Add a note…"
+                          />
                         ) : (
-                          <div className={`wl-note-display${!m.note ? " empty" : ""}`}
-                            onClick={() => { setEditingNote(dest.id); setDraftNote(m.note); }} title="Click to edit">
+                          <div className="wl-note-display" onClick={() => {
+                            setEditingNote(dest.id);
+                            setDraftNote(m.note);
+                          }}>
                             {m.note || "Click to add a note…"}
                           </div>
                         )}
@@ -241,7 +253,7 @@ export default function WishlistPage({ wishlist, setWishlist, meta, setMeta }) {
               <div className="df-pagination">
                 <button className="df-page-btn df-page-nav" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1}>← Previous</button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                  <button key={p} className={`df-page-btn${safePage === p ? " active" : ""}`} onClick={() => setPage(p)}>{p}</button>
+                  <button key={p} className={`df-page-btn${safePage == p ? " active" : ""}`} onClick={() => setPage(p)}>{p}</button>
                 ))}
                 <button className="df-page-btn df-page-nav" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages}>Next →</button>
               </div>
