@@ -180,7 +180,7 @@ export default function DestinationFinder({ wishlist, setWishlist }) {
               ) : results.length == 0 ? (
                 <div className="df-empty-state">
                   <div className="df-empty-icon"><SearchIcon /></div>
-                  <p>No destinations match your filters. Try adjusting your search.</p>
+                  <p>No destinations found. Try adjusting your filters.</p>
                 </div>
               ) : (
                 <>
