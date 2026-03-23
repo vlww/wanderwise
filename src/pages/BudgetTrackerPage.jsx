@@ -60,7 +60,7 @@ export default function BudgetTrackerPage({ wishlist, savings, setSavings, goal,
           {wishlist.length === 0 ? (
             <div className="bt-empty">
               <ImageIcon />
-              <p>No destinations in your wishlist yet.<br />Add some via the Destination Finder!</p>
+              <p>No destinations in your wishlist yet.<br />Add some using the Destination Finder!</p>
             </div>
           ) : (
             paginated.map((dest, i) => {
