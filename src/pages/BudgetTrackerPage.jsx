@@ -10,6 +10,7 @@ export default function BudgetTrackerPage({ wishlist, savings, setSavings, goal,
   const fmt = n => Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const handleSavings = val => {
+    /* savings calculations */
     setRawSavings(val);
     const n = parseFloat(val.replace(/[^0-9.]/g, ""));
     if (!isNaN(n)) setSavings(n);
@@ -25,6 +26,7 @@ export default function BudgetTrackerPage({ wishlist, savings, setSavings, goal,
   const safePage = Math.min(page, totalPages);
   const paginated = wishlist.slice((safePage - 1) * BT_PER_PAGE, safePage * BT_PER_PAGE);
 
+    /* table and destinations */
   return (
     <div className="page">
       <div className="bt-wrap">
